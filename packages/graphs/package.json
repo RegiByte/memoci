@@ -1,0 +1,17 @@
+{
+  "name": "memo-utils",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsc"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "tsconfig": "workspace:*",
+    "config": "workspace:*",
+    "typescript": "^4.5.3"
+  }
+}
