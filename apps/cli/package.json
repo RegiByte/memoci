@@ -20,11 +20,13 @@
 		"dist/*.js"
 	],
 	"dependencies": {
+		"afplay": "^1.0.3",
 		"axios": "^0.26.1",
 		"browserslist": "^4.20.2",
 		"chalk": "^5.0.1",
 		"chokidar": "^3.5.3",
 		"commander": "^9.2.0",
+		"fluent-ffmpeg": "^2.1.2",
 		"html-entities": "^2.3.3",
 		"ink": "^3.2.0",
 		"ink-big-text": "^1.2.0",
@@ -40,9 +42,13 @@
 		"luxon": "^2.3.1",
 		"memo-utils": "workspace:*",
 		"meow": "^9.0.0",
+		"mplayer": "^2.1.0",
+		"play": "^0.5.0",
 		"react": "^17.0.2",
 		"regenerator-runtime": "^0.13.9",
-		"terminal-link": "^3.0.0"
+		"speaker": "^0.5.4",
+		"terminal-link": "^3.0.0",
+		"web-audio-api": "^0.2.2"
 	},
 	"devDependencies": {
 		"@swc/cli": "^0.1.57",
@@ -62,9 +68,9 @@
 		"jest": "^27.5.1",
 		"nodemon": "^2.0.15",
 		"swc-loader": "^0.2.0",
-		"tsconfig": "workspace:*",
 		"ts-jest": "^27.1.4",
 		"ts-loader": "^9.2.8",
+		"tsconfig": "workspace:*",
 		"typescript": "^4.6.3",
 		"webpack": "^5.72.0",
 		"webpack-cli": "^4.9.2",

@@ -1,0 +1,125 @@
+{
+  "nodes": [
+    {
+      "id": "inputs",
+      "data": {},
+      "type": "inputs",
+      "targets": [],
+      "sources": [
+        {
+          "id": "name",
+          "type": "string",
+          "label": "name",
+          "direction": "source"
+        },
+        {
+          "id": "lastName",
+          "type": "string",
+          "label": "last name",
+          "direction": "source"
+        }
+      ],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "join_strings_1",
+      "data": {
+        "string1": "",
+        "string2": " hey!"
+      },
+      "type": "join_strings",
+      "targets": [
+        {
+          "id": "string1",
+          "type": "string",
+          "label": "string 1",
+          "direction": "target"
+        },
+        {
+          "id": "string2",
+          "type": "string",
+          "label": "string 2",
+          "direction": "target"
+        }
+      ],
+      "sources": [
+        {
+          "id": "result",
+          "type": "string",
+          "label": "result",
+          "direction": "source"
+        }
+      ],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "outputs",
+      "data": {},
+      "type": "outputs",
+      "targets": [
+        {
+          "id": "name",
+          "type": "string",
+          "label": "Resolved name",
+          "direction": "target"
+        }
+      ],
+      "sources": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "inputs_name_to_join_string1",
+      "type": "string",
+      "source": "inputs",
+      "sourceSocket": "name",
+      "target": "join_strings_1",
+      "targetSocket": "string1"
+    },
+    {
+      "id": "inputs_lastname_to_join_string2",
+      "type": "string",
+      "source": "inputs",
+      "sourceSocket": "lastName",
+      "target": "join_strings_1",
+      "targetSocket": "string2"
+    },
+    {
+      "id": "join_string1_to_outputs",
+      "type": "string",
+      "source": "join_strings_1",
+      "sourceSocket": "result",
+      "target": "outputs",
+      "targetSocket": "name"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "name",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "lastName",
+      "type": "string",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "id": "name",
+      "type": "string",
+      "required": true
+    }
+  ]
+}

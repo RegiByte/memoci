@@ -3,16 +3,25 @@
   "display": "Cli Package",
   "extends": "./base.json",
   "compilerOptions": {
-    "lib": ["ES2015"],
+    "esModuleInterop": true,
+    "downlevelIteration": false,
+    "lib": [
+      "ES2015"
+    ],
     "module": "CommonJS",
     "target": "ES6",
     "jsx": "react-jsx",
     "allowJs": true,
     "types": [
       "jest"
-    ],
-    "exclude": [
-      "tests"
     ]
-  }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "tests",
+    "node_modules"
+  ]
 }

@@ -1,17 +1,26 @@
 {
-  "name": "memo-utils",
+  "name": "graphs",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "tsc"
+    "dev": "swc src -d dist -w",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.165",
+    "@swc/helpers": "^0.3.8",
+    "@swc/jest": "^0.2.20",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
-    "tsconfig": "workspace:*",
     "config": "workspace:*",
+    "tsconfig": "workspace:*",
     "typescript": "^4.5.3"
+  },
+  "dependencies": {
+    "luxon": "^2.3.1"
   }
 }

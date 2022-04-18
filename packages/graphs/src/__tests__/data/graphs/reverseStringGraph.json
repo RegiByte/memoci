@@ -1,0 +1,181 @@
+{
+  "nodes": [
+    {
+      "id": "inputs",
+      "data": {},
+      "type": "inputs",
+      "targets": [],
+      "sources": [
+        {
+          "id": "username",
+          "label": "user name",
+          "type": "string",
+          "direction": "source"
+        }
+      ],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "reverse_string_1",
+      "data": {},
+      "type": "reverse_string",
+      "targets": [
+        {
+          "id": "input",
+          "type": "string",
+          "label": "input",
+          "direction": "target"
+        }
+      ],
+      "sources": [
+        {
+          "id": "result",
+          "type": "string",
+          "label": "result",
+          "direction": "source"
+        }
+      ],
+      "position": {
+        "x": 100,
+        "y": 0
+      }
+    },
+    {
+      "id": "reverse_string_2",
+      "data": {},
+      "type": "reverse_string",
+      "targets": [
+        {
+          "id": "input",
+          "type": "string",
+          "label": "input",
+          "direction": "target"
+        }
+      ],
+      "sources": [
+        {
+          "id": "result",
+          "type": "string",
+          "label": "result",
+          "direction": "source"
+        }
+      ],
+      "position": {
+        "x": 100,
+        "y": 150
+      }
+    },
+    {
+      "id": "reverse_string_3",
+      "data": {},
+      "type": "reverse_string",
+      "targets": [
+        {
+          "id": "input",
+          "type": "string",
+          "label": "input",
+          "direction": "target"
+        }
+      ],
+      "sources": [
+        {
+          "id": "result",
+          "type": "string",
+          "label": "result",
+          "direction": "source"
+        }
+      ],
+      "position": {
+        "x": 200,
+        "y": 150
+      }
+    },
+    {
+      "id": "outputs",
+      "data": {},
+      "type": "outputs",
+      "targets": [
+        {
+          "id": "username",
+          "label": "reversed name",
+          "type": "string",
+          "direction": "target"
+        },
+        {
+          "id": "normalUsername",
+          "label": "normal username",
+          "type": "string",
+          "direction": "target"
+        }
+      ],
+      "sources": [],
+      "position": {
+        "x": 250,
+        "y": 100
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "username_input_to_reverse_string_1",
+      "type": "string",
+      "source": "inputs",
+      "target": "reverse_string_1",
+      "sourceSocket": "username",
+      "targetSocket": "input"
+    },
+    {
+      "id": "username_input_to_reverse_string_2",
+      "type": "string",
+      "source": "inputs",
+      "target": "reverse_string_2",
+      "sourceSocket": "username",
+      "targetSocket": "input"
+    },
+    {
+      "id": "reverse_string_2_to_reverse_string_3",
+      "type": "string",
+      "source": "reverse_string_2",
+      "target": "reverse_string_3",
+      "sourceSocket": "result",
+      "targetSocket": "input"
+    },
+    {
+      "id": "reverse_string_3_to_outputs",
+      "type": "string",
+      "source": "reverse_string_3",
+      "target": "outputs",
+      "sourceSocket": "result",
+      "targetSocket": "normalUsername"
+    },
+    {
+      "id": "reverse_string_to_outputs",
+      "type": "string",
+      "source": "reverse_string_1",
+      "target": "outputs",
+      "sourceSocket": "result",
+      "targetSocket": "username"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "username",
+      "required": true,
+      "type": "string"
+    }
+  ],
+  "outputs": [
+    {
+      "id": "username",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "normalUsername",
+      "type": "string"
+    }
+  ]
+}
