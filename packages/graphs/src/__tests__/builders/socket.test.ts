@@ -1,4 +1,8 @@
-import { socketBuilder, SocketBuilder, sourceSocketBuilder } from "../../builders/socket"
+import {
+  socketBuilder,
+  SocketBuilder,
+  sourceSocketBuilder
+} from "../../builders/socket"
 
 describe("Socket builders", () => {
   it("Should create string socket", () => {

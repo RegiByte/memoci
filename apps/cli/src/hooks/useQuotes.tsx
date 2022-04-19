@@ -15,7 +15,7 @@ export function useQuotes() {
 			/** If there are no files stored we fetch them all */
 			if (!sortedFiles.length) {
 				const response = await axios.get(
-					"https://zenquotes.io/api/quotes/regibyte-memoci",
+					"https://zenquotes.io/api/quotes/regibyte-memoci"
 				)
 
 				const { data } = response
@@ -38,7 +38,7 @@ export function useQuotes() {
 			/** If we have already fetched the file for today */
 			if (todayQuotesFile) {
 				const todayQuotesJSON = await getConfigFile(
-					`cached/quotes/${todayQuotesFile}`,
+					`cached/quotes/${todayQuotesFile}`
 				)
 
 				setQuotes(JSON.parse(todayQuotesJSON))
@@ -49,7 +49,7 @@ export function useQuotes() {
 				/** If we don't have a json file for today quotes, we fetch them from the internet. */
 				try {
 					const response = await axios.get(
-						"https://zenquotes.io/api/quotes/regibyte-memoci",
+						"https://zenquotes.io/api/quotes/regibyte-memoci"
 					)
 
 					const { data } = response
@@ -59,7 +59,7 @@ export function useQuotes() {
 
 					await saveConfigFile(
 						`cached/quotes/${todayQuotes}`,
-						JSON.stringify(data),
+						JSON.stringify(data)
 					)
 					setQuotes(data)
 				} catch (e) {
@@ -67,7 +67,7 @@ export function useQuotes() {
 
 					const randomQuotesFile = randomElement(sortedFiles)
 					const randomQuotesJSON = await getConfigFile(
-						`cached/quotes/${randomQuotesFile}`,
+						`cached/quotes/${randomQuotesFile}`
 					)
 
 					setQuotes(JSON.parse(randomQuotesJSON))
@@ -78,6 +78,6 @@ export function useQuotes() {
 
 	return {
 		quotes,
-		setQuotes,
+		setQuotes
 	}
 }

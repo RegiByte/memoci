@@ -16,7 +16,7 @@ export function capitalize(string?: string) {
     .split(/([- ]+)/g)
     .filter(word => !["-"].includes(word))
     .map(
-      word => `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`,
+      word => `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`
     )
     .join(" ")
 }

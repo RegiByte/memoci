@@ -1,4 +1,9 @@
-import { GraphEdge, GraphNode, NodeGraph, NodeGraphAttribute } from "../types/graph"
+import {
+  GraphEdge,
+  GraphNode,
+  NodeGraph,
+  NodeGraphAttribute
+} from "../types/graph"
 
 interface GraphBuilder {
   addNode: (params: GraphNode) => GraphBuilder
@@ -36,6 +41,6 @@ export function graphBuilder(): GraphBuilder {
     },
     build(): NodeGraph {
       return graph as NodeGraph
-    },
+    }
   }
 }

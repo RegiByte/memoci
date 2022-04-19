@@ -12,6 +12,9 @@
     },
     "test": {
       "cache": false
+    },
+    "editor": {
+      "cache": false
     }
   }
 }

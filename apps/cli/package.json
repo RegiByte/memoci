@@ -14,7 +14,10 @@
 		"dev": "swc src -d dist -w",
 		"build": "swc src -d dist",
 		"test": "jest --config=./build/jest.config.js",
-		"test-watch": "jest --config=./build/jest.config.js --watch"
+		"test-watch": "jest --config=./build/jest.config.js --watch",
+		"lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+		"lint-fix": "eslint --ext .js,.jsx,.ts,.tsx src --color --fix && npm run format",
+		"format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,scss,css,json}'"
 	},
 	"files": [
 		"dist/*.js"

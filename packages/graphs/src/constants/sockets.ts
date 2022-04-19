@@ -1,6 +1,1 @@
-export const kSocketTypes = [
-  'string',
-  'number',
-  'boolean',
-  'json'
-]
+export const kSocketTypes = ["string", "number", "boolean", "json"]

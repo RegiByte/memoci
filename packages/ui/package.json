@@ -1,14 +1,44 @@
 {
   "name": "ui",
   "version": "0.0.0",
-  "main": "./index.tsx",
-  "types": "./index.tsx",
+  "main": "./dist/index.js",
+  "types": "./src/index.tsx",
   "license": "MIT",
+  "scripts": {
+    "dev": "concurrently 'pnpm run tailwind:dev' 'swc src -d dist -w --copy-files'",
+    "tailwind:dev": "tailwindcss -i ./src/tailwind.css -o ./dist/tailwind.css --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+    "lint-fix": "eslint --ext .js,.jsx,.ts,.tsx src --color --fix && npm run format",
+    "editor": "pnpm run dev"
+  },
   "devDependencies": {
-    "@types/react": "^17.0.37",
+    "@types/node": "^17.0.25",
     "@types/react-dom": "^17.0.11",
+    "autoprefixer": "^10.4.4",
+    "concurrently": "^7.0.0",
+    "css-loader": "^6.6.0",
+    "html-webpack-plugin": "^5.5.0",
+    "postcss": "^8.4.12",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.4.3",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.24",
+    "ts-loader": "^9.2.8",
     "tsconfig": "workspace:*",
-    "config": "workspace:*",
     "typescript": "^4.5.3"
+  },
+  "dependencies": {
+    "@svgr/webpack": "^6.2.1",
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.168",
+    "@swc/helpers": "^0.3.8",
+    "@swc/jest": "^0.2.20",
+    "@types/react": "^17.0.44",
+    "config": "workspace:*",
+    "swc-loader": "^0.2.0",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   }
 }

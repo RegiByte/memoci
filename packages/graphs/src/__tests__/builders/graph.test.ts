@@ -1,9 +1,13 @@
 import { graphBuilder } from "../../builders/graph"
-import { inputsNodeBuilder, outputsNodeBuilder, reverseStringNodeBuilder } from "../../builders/node"
-import reverseStringGraph from '../data/graphs/reverseStringGraph.json'
+import {
+  inputsNodeBuilder,
+  outputsNodeBuilder,
+  reverseStringNodeBuilder
+} from "../../builders/node"
+import reverseStringGraph from "../data/graphs/reverseStringGraph.json"
 
-describe('Graph builder capabilities', () => {
-  it('Should match basic json graph', () => {
+describe("Graph builder capabilities", () => {
+  it("Should match basic json graph", () => {
     const graph = graphBuilder()
       .addInput({
         id: "username",
@@ -124,6 +128,5 @@ describe('Graph builder capabilities', () => {
       .build()
 
     expect(graph).toEqual(reverseStringGraph)
-
   })
 })

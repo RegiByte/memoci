@@ -27,5 +27,7 @@ export interface GraphPathfinder {
 }
 
 export type AddNextNodeFn = (nextNode: string) => void
-export type PathfinderCallback = (edge: GraphEdge, addNextNode?: AddNextNodeFn) => Promise<void>
-
+export type PathfinderCallback = (
+  edge: GraphEdge,
+  addNextNode?: AddNextNodeFn
+) => Promise<void>

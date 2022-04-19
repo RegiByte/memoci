@@ -17,12 +17,12 @@ describe("Basic Node Graph Tests", () => {
     })
 
     const result1 = await runtime.preview({
-      username: "rafael"
+      username: "daniel"
     })
 
     expect(result1).toEqual({
-      username: "leafar",
-      normalUsername: "rafael"
+      username: "leinad",
+      normalUsername: "daniel"
     })
   })
 

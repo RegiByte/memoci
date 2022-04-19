@@ -1,0 +1,35 @@
+{
+	"minify": false,
+	"test": ".tsx?$",
+	"jsc": {
+		"baseUrl": "./src",
+		"externalHelpers": true,
+		"parser": {
+			"syntax": "typescript",
+			"tsx": true,
+			"decorators": true,
+			"dynamicImport": true
+		},
+		"transform": {
+			"react": {
+				"runtime": "automatic",
+				"throwIfNamespace": true
+			},
+			"legacyDecorator": true,
+			"decoratorMetadata": true
+		}
+	},
+	"module": {
+		"type": "es6",
+		"strict": false,
+		"strictMode": true,
+		"lazy": false,
+		"noInterop": false,
+		"ignoreDynamic": true
+	},
+	"env": {
+		"targets": "defaults and supports es6-module and supports es6-module-dynamic-import, not opera > 0, not samsung > 0, not and_qq > 0",
+		"mode": "usage",
+		"coreJs": 3
+	}
+}

@@ -1,6 +1,6 @@
 // Source is right (output - source of data)
 // Target is left (input - target of edge)
-export type GraphNodeSocketDirection = 'source' | 'target'
+export type GraphNodeSocketDirection = "source" | "target"
 
 export interface GraphNodeSocket<D> {
   id: string
@@ -19,8 +19,8 @@ export interface GraphNode {
   type: string
   position: GraphNodePosition
   data?: any
-  targets: GraphNodeSocket<'target'>[]
-  sources: GraphNodeSocket<'source'>[]
+  targets: GraphNodeSocket<"target">[]
+  sources: GraphNodeSocket<"source">[]
 }
 
 export interface GraphEdge {

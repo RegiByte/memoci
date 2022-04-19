@@ -23,12 +23,12 @@ function NewsFlow({
 	date,
 	language,
 	terminalLink,
-	content,
+	content
 }: NewsFlowPros) {
 	const { news, loading } = useNews({
 		query,
 		date,
-		language,
+		language
 	})
 
 	const selectedNews = useMemo(() => {
@@ -130,17 +130,17 @@ export function newsCommand(program: Command) {
 		.option(
 			"-q, --query <string>",
 			"Optional search parameter for searching news",
-			"tech",
+			"tech"
 		)
 		.option(
 			"-d, --date <string>",
 			"Date parameter for searching news, defaults to today",
-			DateTime.now().toISODate(),
+			DateTime.now().toISODate()
 		)
 		.option(
 			"-l, --language <string>",
 			"Two digit code for desired language, default en",
-			"en",
+			"en"
 		)
 		.option("-c, --content", "Two digit code for history search", false)
 		.action(async (params, options) => {
@@ -165,7 +165,7 @@ export function newsCommand(program: Command) {
 					date={date}
 					terminalLink={terminalLink}
 					colorComponent={ColorComponent}
-				/>,
+				/>
 			)
 		})
 
@@ -175,12 +175,12 @@ export function newsCommand(program: Command) {
 		.option(
 			"-d, --date <string>",
 			"Date parameter for fetching search history",
-			DateTime.now().toISODate(),
+			DateTime.now().toISODate()
 		)
 		.option(
 			"-l, --language <string>",
 			"Two digit code for history search",
-			"all",
+			"all"
 		)
 		.action(async (params, options) => {
 			const { date, language } = params
@@ -209,7 +209,7 @@ export function newsCommand(program: Command) {
 							padding={1}
 						>
 							<Text>No news found for this date/lang combination</Text>
-						</Box>,
+						</Box>
 					)
 					return
 				}
@@ -220,13 +220,13 @@ export function newsCommand(program: Command) {
 						.split("-")
 					let fullHour = hour.join("")
 					const search = capitalize(
-						currentFile.slice("h00-l-ln-".length).replace(".json", ""),
+						currentFile.slice("h00-l-ln-".length).replace(".json", "")
 					)
 
 					return {
 						hour: fullHour,
 						search,
-						lang,
+						lang
 					}
 				})
 
@@ -265,7 +265,7 @@ export function newsCommand(program: Command) {
 								</Box>
 							</Box>
 						))}
-					</Box>,
+					</Box>
 				)
 			} catch (e) {
 				console.log(`❌ ${chalk.bgRed`failed to get news from date ${date}`}\n`)

@@ -5,6 +5,8 @@ module.exports = {
     commonjs: true,
     es6: true,
     jest: true,
+    es2020: true,
+    node: true
   },
   extends: ["airbnb-typescript", "react-app", "react-app/jest", "prettier"],
   parser: "@typescript-eslint/parser",

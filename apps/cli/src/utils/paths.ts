@@ -20,7 +20,7 @@ export const configFileExists = async (configFilePath: string) => {
 
 export const setupConfigPath = async (
 	configPath: string,
-	isFile: boolean = false,
+	isFile: boolean = false
 ) => {
 	let fullPath = isFile
 		? path.dirname(getFullConfigPath(configPath))
@@ -31,7 +31,7 @@ export const setupConfigPath = async (
 		return
 	} catch (e) {
 		await fs.mkdir(fullPath, {
-			recursive: true,
+			recursive: true
 		})
 	}
 }

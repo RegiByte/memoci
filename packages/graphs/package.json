@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "swc src -d dist -w",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+    "lint-fix": "eslint --ext .js,.jsx,.ts,.tsx src --color --fix && npm run format",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,scss,css,json}'"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.57",

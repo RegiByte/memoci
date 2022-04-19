@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@tailwind screens;
+
+@screen sm {
+    .hi {
+        color: orange;
+    }
+}
+
+@screen xl {
+    .hi {
+        color: red;
+    }
+}

@@ -3,7 +3,7 @@ import {
 	SetStateAction,
 	useCallback,
 	useEffect,
-	useState,
+	useState
 } from "react"
 import { kebabCase, randomElement } from "memo-utils"
 import { DateTime } from "luxon"
@@ -37,15 +37,15 @@ function getNews({ query, date, sortBy, language = "en" }: FetchNewsParams) {
 			from: date,
 			sortBy: sortBy,
 			apiKey: newsApiKey,
-			language,
-		},
+			language
+		}
 	})
 }
 
 export default function useNews({
 	query,
 	date,
-	language,
+	language
 }: {
 	query: string
 	date: string
@@ -64,7 +64,7 @@ export default function useNews({
 			setNewsState(news)
 			setLoading(false)
 		}) as Dispatch<SetStateAction<NewsArticle[]>>,
-		[],
+		[]
 	)
 
 	useEffect(() => {
@@ -89,7 +89,7 @@ export default function useNews({
 						query,
 						date,
 						sortBy: "popularity",
-						language,
+						language
 					})
 
 					newsData = newsResponse.data
@@ -101,14 +101,14 @@ export default function useNews({
 
 					try {
 						const randomNewsFromToday = await getConfigFile(
-							`${todayNewsPath}/${randomNewsFileFromToday}`,
+							`${todayNewsPath}/${randomNewsFileFromToday}`
 						)
 						newsData = JSON.parse(randomNewsFromToday)
 						setNews(newsData?.articles || [])
 						return
 					} catch (e) {
 						console.log(
-							"❌ there was an error while fetching an alternative news file",
+							"❌ there was an error while fetching an alternative news file"
 						)
 					}
 				}
@@ -128,6 +128,6 @@ export default function useNews({
 		news,
 		setNews,
 		loading,
-		setLoading,
+		setLoading
 	}
 }

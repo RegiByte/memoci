@@ -72,21 +72,13 @@ export class BasicRuntime implements GraphRuntime {
     return this.getOutputs()
   }
 
-  findEdgeByTargetSocket(
-    edges: GraphEdge[],
-    nodeId: string,
-    socketId: string
-  ) {
+  findEdgeByTargetSocket(edges: GraphEdge[], nodeId: string, socketId: string) {
     return edges.find(
       edge => edge.target === nodeId && edge.targetSocket === socketId
     )
   }
 
-  findEdgeBySourceSocket(
-    edges: GraphEdge[],
-    nodeId: string,
-    socketId: string
-  ) {
+  findEdgeBySourceSocket(edges: GraphEdge[], nodeId: string, socketId: string) {
     return edges.find(
       edge => edge.target === nodeId && edge.sourceSocket === socketId
     )
@@ -112,7 +104,7 @@ export class BasicRuntime implements GraphRuntime {
 
   resolveOutputValue(outputValue: { edge: GraphEdge; value: any }) {
     const { value } = outputValue
-    if (typeof value === 'object') {
+    if (typeof value === "object") {
       return value?.result || value?.output
     }
 
