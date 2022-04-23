@@ -22,8 +22,7 @@
               "type",
               "label",
               "data"
-            ],
-            "additionalProperties": false
+            ]
           }
         },
         "edges": {
@@ -43,14 +42,13 @@
               "type",
               "label",
               "data"
-            ],
-            "additionalProperties": false
+            ]
           }
         },
         "ioAttributes": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/IoAttribute%3Cany%3E"
+            "type": "string"
           }
         }
       },
@@ -58,22 +56,7 @@
         "nodes",
         "edges",
         "ioAttributes"
-      ],
-      "additionalProperties": false
-    },
-    "IoAttribute<any>": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string"
-        },
-        "data": {}
-      },
-      "required": [
-        "type",
-        "data"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }
