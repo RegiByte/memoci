@@ -1,6 +1,1 @@
-const preset = require("config/eslint-preset")
-
-module.exports = {
-	root: true,
-	...preset,
-}
+module.exports = require("config/eslint-preset")

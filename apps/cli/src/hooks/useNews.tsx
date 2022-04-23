@@ -54,14 +54,14 @@ export default function useNews({
 	const [news, setNewsState] = useState<NewsArticle[]>([])
 	const [loading, setLoading] = useState<boolean>(true)
 	const setNews = useCallback(
-		(news => {
-			if (typeof news === "function") {
-				setNewsState(current => (news as any)(current))
+		(updatedNews => {
+			if (typeof updatedNews === "function") {
+				setNewsState(current => (updatedNews as any)(current))
 				setLoading(false)
 				return
 			}
 
-			setNewsState(news)
+			setNewsState(updatedNews)
 			setLoading(false)
 		}) as Dispatch<SetStateAction<NewsArticle[]>>,
 		[]
@@ -106,7 +106,7 @@ export default function useNews({
 						newsData = JSON.parse(randomNewsFromToday)
 						setNews(newsData?.articles || [])
 						return
-					} catch (e) {
+					} catch (storeFileError) {
 						console.log(
 							"❌ there was an error while fetching an alternative news file"
 						)

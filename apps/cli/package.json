@@ -64,8 +64,6 @@
 		"@types/react": "^18.0.5",
 		"config": "workspace:*",
 		"eslint": "7.32.0",
-		"eslint-plugin-react": "^7.29.4",
-		"eslint-plugin-react-hooks": "^4.4.0",
 		"fork-ts-checker-webpack-plugin": "^7.2.6",
 		"ink-testing-library": "^2.1.0",
 		"jest": "^27.5.1",

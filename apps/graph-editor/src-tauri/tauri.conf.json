@@ -12,8 +12,11 @@
   "tauri": {
     "bundle": {
       "active": true,
-      "targets": "all",
-      "identifier": "com.tauri.dev",
+      "targets": [
+        "deb",
+        "appimage"
+      ],
+      "identifier": "com.regibyte.graph.editor",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -49,7 +52,19 @@
       "active": false
     },
     "allowlist": {
-      "all": true
+      "fs": {
+        "all": true,
+        "scope": [
+          "$APP/*",
+          "$DESKTOP/*"
+        ]
+      },
+      "path": {
+        "all": true
+      },
+      "dialog": {
+        "all": true
+      }
     },
     "windows": [
       {
@@ -57,7 +72,8 @@
         "width": 800,
         "height": 600,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "maximized": true
       }
     ],
     "security": {

@@ -14,8 +14,27 @@ module.exports = {
       },
       screens: {
         ...defaultTheme.screens,
+      },
+      animation: {
+        'blink': 'blink 2s linear infinite'
+      },
+      keyframes: {
+        '0%': {
+          opacity: '100%'
+        },
+        '50%': {
+          opacity: '50%'
+        },
+        '100%': {
+          opacity: '100%'
+        }
       }
     }
   },
-  plugins: []
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp'),
+    require('@tailwindcss/aspect-ratio'),
+  ]
 }

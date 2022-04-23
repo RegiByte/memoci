@@ -29,7 +29,7 @@
 	},
 	"env": {
 		"targets": "defaults and supports es6-module and supports es6-module-dynamic-import, not opera > 0, not samsung > 0, not and_qq > 0",
-		"mode": "usage",
-		"coreJs": 3
+		"mode": "entry",
+		"coreJs": "3.11"
 	}
 }

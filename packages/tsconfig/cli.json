@@ -3,6 +3,7 @@
   "display": "Cli Package",
   "extends": "./base.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "esModuleInterop": true,
     "downlevelIteration": false,
     "lib": [

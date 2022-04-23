@@ -1,47 +1,23 @@
-import { useState } from "react"
-import logo from "./logo.svg"
-import "./App.css"
+import { Route, Routes } from "react-router-dom"
+import Home from "./components/pages/home"
+import { useEffect } from "react"
+import { appWindow } from "@tauri-apps/api/window"
+import EditorLayout from "./components/wrappers/EditorLayout"
+import SchemaEditor from "./components/pages/schemaEditor"
 
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    appWindow.maximize()
+  }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello React!</p>
-        <p>
-          <button
-            className="rounded-lg bg-sky-400 px-4 py-2 hover:bg-sky-600 cursor-pointer"
-            type="button"
-            onClick={() => setCount(count => count + 1)}
-          >
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div className="m-0 h-screen w-screen snap-y overscroll-x-none bg-sky-400 p-0">
+      <EditorLayout>
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<SchemaEditor />} path="/create/schema" />
+        </Routes>
+      </EditorLayout>
     </div>
   )
 }

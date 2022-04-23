@@ -1,0 +1,25 @@
+{
+  "name": "graph-runtime",
+  "collaborators": [
+    "Reginaldo Junior <reginaldo.junior696@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "wasm-pack build --target web",
+    "editor": "pnpm run dev"
+  },
+  "main": "pkg/graph_runtime.js",
+  "files": [
+    "pkg/graph_runtime_bg.wasm",
+    "pkg/graph_runtime.js",
+    "pkg/graph_runtime_bg.js",
+    "pkg/graph_runtime.d.ts"
+  ],
+  "module": "pkg/graph_runtime.js",
+  "types": "pkg/graph_runtime.d.ts",
+  "sideEffects": false,
+  "dependencies": {
+    "vite": "^2.9.5",
+    "vite-plugin-wasm-pack": "^0.1.10"
+  }
+}

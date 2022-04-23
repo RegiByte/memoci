@@ -1,17 +1,17 @@
 {
   "extends": "tsconfig/react-library.json",
   "include": [
-    "src"
+    "src",
+    "scripts",
+    ".eslintrc.js",
+    "vite.config.ts"
   ],
   "exclude": [
     "dist",
     "build",
-    "node_modules",
-    "**/*.test.tsx",
-    "**/*.test.ts"
+    "node_modules"
   ],
   "compilerOptions": {
     "baseUrl": ".",
-  },
-  "references": [{ "path": "./tsconfig.node.json" }]
+  }
 }

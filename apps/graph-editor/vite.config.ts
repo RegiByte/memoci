@@ -1,12 +1,8 @@
 import { defineConfig } from "vite"
 import swc from "unplugin-swc"
-import viteReact from "@vitejs/plugin-react"
-import swcReact from "vite-plugin-swc-react"
+import wasm from "vite-plugin-wasm"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  esbuild: {
-    jsxInject: `import React from 'react'`
-  },
-  plugins: [swc.vite()]
+  plugins: [swc.vite(), wasm()]
 })

@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "schema:generate": {
+      "files": [
+        "src/types/RuntimeSchema.ts"
+      ]
+    }
+  }
+}
