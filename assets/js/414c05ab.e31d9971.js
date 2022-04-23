@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[776],{5239:function(e){e.exports=JSON.parse('{"allTagsPath":"/memoci/blog/tags","name":"hello","count":2,"permalink":"/memoci/blog/tags/hello"}')}}]);
