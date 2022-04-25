@@ -2,6 +2,7 @@
   "extends": "tsconfig/react-library.json",
   "include": [
     "src",
+    "src/**/*.md",
     "scripts",
     ".eslintrc.js",
     "vite.config.ts"

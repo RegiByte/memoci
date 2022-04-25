@@ -5,7 +5,8 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "editor": "pnpm run dev"
   },
   "devDependencies": {
     "@types/react": "^17.0.37",

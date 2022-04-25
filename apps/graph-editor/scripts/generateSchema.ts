@@ -6,12 +6,13 @@ const project = require("../project.json")
 
 const config = {
   tsconfig: path.resolve(__dirname, "../tsconfig.json"),
-  type: "*"
+  type: "*",
+  additionalProperties: true
 }
 
 async function run() {
   await Promise.all(
-    project.scripts["schema:generate"].files.map(async file => {
+    project.scripts["schema:generate"].files.map(async (file: string) => {
       const schema = tjs
         .createGenerator({
           ...config,
@@ -29,6 +30,10 @@ async function run() {
       )
     })
   )
+
+  await fs.cp(path.resolve(__dirname, "../schemas"), path.resolve(__dirname, '../../docs/static/schemas'), {
+    recursive: true
+  })
 }
 
 run()

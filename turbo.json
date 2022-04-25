@@ -15,6 +15,9 @@
     },
     "editor": {
       "cache": false
-    }
+    },
+    "docs": {
+      "cache": false
+    },
   }
 }

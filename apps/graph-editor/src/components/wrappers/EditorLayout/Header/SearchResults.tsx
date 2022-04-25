@@ -44,11 +44,11 @@ function SearchResults(props: SearchResultsProps) {
   return (
     <>
       {searchResults.all().length > 0 && (
-        <div className="absolute -bottom-[30px] left-0 w-full px-8">
+        <div className="absolute z-[2] -bottom-[30px] left-0 w-full px-8">
           <div className="relative w-full">
             <div
               className={`absolute top-0 max-h-[600px] w-full snap-y overflow-x-hidden rounded-lg border-2
-                    border-sky-200 bg-white shadow-lg
+                    border-sky-200 bg-white shadow-lg z-[10]
                   `}
             >
               <div className="flex flex-col p-4">

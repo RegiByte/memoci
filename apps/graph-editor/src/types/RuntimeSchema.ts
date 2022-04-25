@@ -1,22 +1,34 @@
-interface NodeSchema<T> {
-  type: string
+export type NodeSocketDirection = 'source' | 'target'
+
+export interface NodeSocketSchema {
+  type: IoAttribute
+  key: string
   label: string
-  data: T
 }
 
-interface EdgeSchema<T> {
-  type: string
+export interface NodeSchema<T> {
+  key: string
   label: string
-  data: T
+  data: Record<string, T>
+  targets: NodeSocketSchema[]
+  sources: NodeSocketSchema[]
 }
 
-export interface IoAttribute<T> {
-  type: string
-  data: T
+export interface EdgeSchema<T> {
+  key: string
+  label: string
+  data: Record<string, T>
 }
+
+export type IoAttribute = "string" | "number" | "image" | "json"
+
+export type IoAttributes = IoAttribute
 
 export interface RuntimeSchema {
-  nodes: NodeSchema<any>[]
-  edges: EdgeSchema<any>[]
-  ioAttributes: IoAttribute<any>[]
+  key: string
+  title: string
+  description?: string
+  nodes: NodeSchema<IoAttributes>[]
+  edges: EdgeSchema<IoAttributes>[]
+  ioAttributes: IoAttributes[]
 }

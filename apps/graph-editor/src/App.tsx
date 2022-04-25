@@ -11,7 +11,7 @@ function App() {
   }, [])
 
   return (
-    <div className="m-0 h-screen w-screen snap-y overscroll-x-none bg-sky-400 p-0">
+    <div className="m-0 pb-40 min-h-screen w-screen snap-y overscroll-x-none bg-sky-400 p-0">
       <EditorLayout>
         <Routes>
           <Route element={<Home />} path="/" />

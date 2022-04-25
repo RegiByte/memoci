@@ -12,7 +12,7 @@ interface CodeEditorProviderProps {
 }
 
 // eslint-disable-next-line no-restricted-globals
-;(self as any).MonacoEnvironment = {
+;;(self as any).MonacoEnvironment = {
   getWorker(_, label: string) {
     if (label === "json") {
       return new jsonWorker()
@@ -31,6 +31,13 @@ interface CodeEditorProviderProps {
 }
 
 loader.config({ monaco })
+
+monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+  validate: true,
+  allowComments: false,
+  schemas: [],
+  enableSchemaRequest: true
+})
 
 function CodeEditorProvider({ children }: CodeEditorProviderProps) {
   useEffect(() => {

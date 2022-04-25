@@ -1,0 +1,58 @@
+{
+  "$schema": "https://regibyte.github.io/memoci/schemas/RuntimeSchema.json",
+  "key": "untitled_schema",
+  "title": "Untitled schema",
+  "description": "Yay! 🎉 My first schema",
+  "edges": [
+    {
+      "key": "string",
+      "label": "String Edge",
+      "data": {
+        "value": "string"
+      }
+    },
+    {
+      "key": "number",
+      "label": "Number Edge",
+      "data": {
+        "value": "number"
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "key": "string",
+      "label": "String Node",
+      "data": {
+        "value": "string"
+      },
+      "sources": [
+        {
+          "key": "value",
+          "label": "Value",
+          "type": "string"
+        }
+      ],
+      "targets": []
+    },
+    {
+      "key": "number",
+      "label": "Number Node",
+      "data": {
+        "value": "number"
+      },
+      "sources": [
+        {
+          "key": "value",
+          "label": "Value",
+          "type": "number"
+        }
+      ],
+      "targets": []
+    }
+  ],
+  "ioAttributes": [
+    "string",
+    "number"
+  ]
+}
