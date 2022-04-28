@@ -1,3 +1,6 @@
+import stringLib from "string"
+
+export const $string = stringLib
 
 export function ellipsis(string: string, maxLength: number) {
   if (!string || !string.length) {

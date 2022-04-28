@@ -16,7 +16,10 @@ function JsonSchemaEditor({ schema, onEditorChange }: JsonSchemaEditorProps) {
     <Editor
       defaultLanguage="json"
       height="700px"
-      value={JSON.stringify(schema, null, 2)}
+      value={JSON.stringify({
+        $schema: 'https://regibyte.github.io/memoci/schemas/RuntimeSchema.json',
+        ...schema
+      }, null, 2)}
       onChange={onEditorChange}
     />
   )

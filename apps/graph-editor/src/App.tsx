@@ -1,21 +1,18 @@
 import { Route, Routes } from "react-router-dom"
 import Home from "./components/pages/home"
-import { useEffect } from "react"
-import { appWindow } from "@tauri-apps/api/window"
 import EditorLayout from "./components/wrappers/EditorLayout"
-import SchemaEditor from "./components/pages/schemaEditor"
+import SchemaEditor, { SchemaFileEditor } from "./components/pages/schemaEditor"
+import { GraphCreateForm } from "./components/pages/graphEditor"
 
 function App() {
-  useEffect(() => {
-    appWindow.maximize()
-  }, [])
-
   return (
-    <div className="m-0 pb-40 min-h-screen w-screen snap-y overscroll-x-none bg-sky-400 p-0">
+    <div className="m-0 min-h-screen w-screen snap-y overscroll-x-none bg-sky-400 p-0 pb-40">
       <EditorLayout>
         <Routes>
           <Route element={<Home />} path="/" />
-          <Route element={<SchemaEditor />} path="/create/schema" />
+          <Route element={<SchemaEditor />} path="/schemas/create" />
+          <Route element={<SchemaFileEditor />} path="/schemas/edit/:path" />
+          <Route element={<GraphCreateForm />} path="/graphs/create" />
         </Routes>
       </EditorLayout>
     </div>

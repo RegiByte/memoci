@@ -36,7 +36,8 @@ function StringSocketField(props: SocketFieldProps) {
           </SocketBubbleContainer>
 
           <input
-            className="w-4/5 flex-1 rounded-xl px-2 shadow-md"
+            disabled
+            className="pointer-events-none w-4/5 flex-1 rounded-xl px-2 shadow-md"
             placeholder={props.label}
             type="text"
           />
@@ -66,7 +67,8 @@ function NumberSocketField(props: SocketFieldProps) {
             <SocketBubble className="bg-lime-400" />
           </SocketBubbleContainer>
           <input
-            className="w-4/5 flex-1 rounded-xl px-2 shadow-md"
+            disabled
+            className="pointer-events-none w-4/5 flex-1 rounded-xl px-2 shadow-md"
             placeholder={props.label}
             type="text"
           />
@@ -96,7 +98,8 @@ function ImageSocketField(props: SocketFieldProps) {
             <SocketBubble className="bg-pink-400" />
           </SocketBubbleContainer>
           <input
-            className="w-4/5 flex-1 rounded-xl px-2 shadow-md"
+            disabled
+            className="pointer-events-none w-4/5 flex-1 rounded-xl px-2 shadow-md"
             placeholder={props.label}
             type="text"
           />
@@ -126,7 +129,101 @@ function JsonSocketField(props: SocketFieldProps) {
             <SocketBubble className="bg-amber-400" />
           </SocketBubbleContainer>
           <input
-            className="w-4/5 flex-1 rounded-xl px-2 shadow-md"
+            disabled
+            className="pointer-events-none w-4/5 flex-1 rounded-xl px-2 shadow-md"
+            placeholder={props.label}
+            type="text"
+          />
+        </>
+      )}
+
+      {isSource && (
+        <>
+          <h2 className="flex-1 text-right">{props.label}</h2>
+          <SocketBubbleContainer>
+            <SocketBubble className="bg-amber-400" />
+          </SocketBubbleContainer>
+        </>
+      )}
+    </SocketRow>
+  )
+}
+
+function BooleanSocketField(props: SocketFieldProps) {
+  const isSource = props.direction === "source"
+
+  return (
+    <SocketRow>
+      {!isSource && (
+        <>
+          <SocketBubbleContainer>
+            <SocketBubble className="bg-red-500" />
+          </SocketBubbleContainer>
+          <input
+            disabled
+            className="pointer-events-none w-4/5 flex-1 rounded-xl px-2 shadow-md"
+            placeholder={props.label}
+            type="text"
+          />
+        </>
+      )}
+
+      {isSource && (
+        <>
+          <h2 className="flex-1 text-right">{props.label}</h2>
+          <SocketBubbleContainer>
+            <SocketBubble className="bg-red-500" />
+          </SocketBubbleContainer>
+        </>
+      )}
+    </SocketRow>
+  )
+}
+
+function ArraySocketField(props: SocketFieldProps) {
+  const isSource = props.direction === "source"
+
+  return (
+    <SocketRow>
+      {!isSource && (
+        <>
+          <SocketBubbleContainer>
+            <SocketBubble className="bg-purple-400" />
+          </SocketBubbleContainer>
+          <input
+            disabled
+            className="pointer-events-none w-4/5 flex-1 rounded-xl px-2 shadow-md"
+            placeholder={props.label}
+            type="text"
+          />
+        </>
+      )}
+
+      {isSource && (
+        <>
+          <h2 className="flex-1 text-right">{props.label}</h2>
+          <SocketBubbleContainer>
+            <SocketBubble className="bg-purple-400" />
+          </SocketBubbleContainer>
+        </>
+      )}
+    </SocketRow>
+  )
+}
+
+function AnySocketField(props: SocketFieldProps) {
+  const isSource = props.direction === "source"
+
+  return (
+    <SocketRow>
+      {!isSource && (
+        <>
+          <SocketBubbleContainer>
+            <SocketBubble className="bg-zinc-300" />
+          </SocketBubbleContainer>
+          <input
+            disabled
+            className="pointer-events-none w-4/5 flex-1 rounded-xl px-2 shadow-md"
             placeholder={props.label}
             type="text"
           />
@@ -149,7 +246,10 @@ const socketFields: Record<IoAttribute, React.FC<SocketFieldProps>> = {
   string: StringSocketField,
   number: NumberSocketField,
   image: ImageSocketField,
-  json: JsonSocketField
+  json: JsonSocketField,
+  boolean: BooleanSocketField,
+  array: ArraySocketField,
+  any: AnySocketField
 }
 
 function SocketField(props: SocketFieldProps) {

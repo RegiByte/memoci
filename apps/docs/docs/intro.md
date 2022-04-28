@@ -50,6 +50,18 @@ using their tools and handling all the underlying complexity themselves, and **y
 
 :::
 
+## Before getting started
+Our visual editor is created with the idea that you only provide your users with the nodes that they need for the context where the graph is being edited, which makes it well suited for creating applications where intermediary users can configure the behavior of certain entities and flows using pre-fabricated nodes.
+
+To effectively use Graphix you need to have a basic understanding of the following:
+
+- How to create a graph
+- How to add nodes to the graph
+- How to connect nodes together
+- How to run the graph
+- How to create a runtime
+- How to add resolvers to a runtime
+
 ## Install
 
 If you're just testing the library you can use just the standard runtime.
@@ -126,7 +138,7 @@ async function generateReport({ title = 'another-mont-another-dolar', month = 'a
     databaseUrl: 'mongo://your.cluster/db',
     csvColumns: ['col1', 'col2', 'col2'],
     csvSeparator: ';',
-    csvFilename: `${filename}-${month}.csv`,
+    csvFilename: `${title}-${month}.csv`,
     fileStorageProvider: 'https://your.fs.storage',
     fileStorageApiKey: 'super-secret-api-key',
     emailRecipients: emailList,

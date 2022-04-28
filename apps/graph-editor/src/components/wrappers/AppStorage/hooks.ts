@@ -33,3 +33,14 @@ export function useStorageDirFiles(path: string) {
 
   return files
 }
+
+export function useStorageResource(fsModule: string, filename: string) {
+  const { readResource } = useAppStorage()
+  const [fileContent, setFileContent] = useState("")
+
+  useEffect(() => {
+    readResource[fsModule](filename).then(content => setFileContent(content))
+  }, [filename, setFileContent])
+
+  return fileContent
+}

@@ -1,41 +1,42 @@
 import {
   IoAttribute,
-  IoAttributes,
   NodeSchema,
   NodeSocketSchema
 } from "../../types/RuntimeSchema"
-import produce from "immer"
 import { collect } from "collect.js"
 
-export interface NodeSchemaBuilder {
-  build(): NodeSchema<IoAttribute>
+export interface NodeSchemaBuilder<T> {
+  build(): NodeSchema<T>
 
-  data(data: Record<string, IoAttribute>): NodeSchemaBuilder
+  ioType(type: T): NodeSchemaBuilder<T>
 
-  key(key: string): NodeSchemaBuilder
+  data(data: Record<string, T>): NodeSchemaBuilder<T>
 
-  label(label: string): NodeSchemaBuilder
+  key(key: string): NodeSchemaBuilder<T>
 
-  addTargetSocket(socket: NodeSocketSchema): NodeSchemaBuilder
+  label(label: string): NodeSchemaBuilder<T>
 
-  addSourceSocket(socket: NodeSocketSchema): NodeSchemaBuilder
+  addTargetSocket(socket: NodeSocketSchema): NodeSchemaBuilder<T>
 
-  removeTargetSocket(key: string): NodeSchemaBuilder
+  addSourceSocket(socket: NodeSocketSchema): NodeSchemaBuilder<T>
 
-  removeSourceSocket(key: string): NodeSchemaBuilder
+  removeTargetSocket(key: string): NodeSchemaBuilder<T>
+
+  removeSourceSocket(key: string): NodeSchemaBuilder<T>
 }
 
-export class NodeSchemaBuilderImpl implements NodeSchemaBuilder {
-  schema: NodeSchema<IoAttributes>
+export class NodeSchemaBuilderImpl<T> implements NodeSchemaBuilder<T> {
+  schema: NodeSchema<T>
 
-  constructor(params: Partial<NodeSchema<IoAttribute>> = {}) {
+  constructor(params: Partial<NodeSchema<T>> = {}) {
     this.schema = this.getBaseSchema(params)
   }
 
-  getBaseSchema(params: Partial<NodeSchema<IoAttribute>>) {
+  getBaseSchema(params: Partial<NodeSchema<T>>): NodeSchema<T> {
     return {
       key: params.key || this.getNewKey(),
       label: params.label || "Untitled node",
+      ioType: params.ioType || ("any" as any),
       data: params.data || {},
       sources: params.sources || [],
       targets: params.targets || []
@@ -46,26 +47,32 @@ export class NodeSchemaBuilderImpl implements NodeSchemaBuilder {
     return `untitled_${new Date().getTime().toString()}`
   }
 
-  updateSchema(params: Partial<NodeSchema<IoAttributes>>): NodeSchemaBuilder {
-    this.schema = produce(this.schema, draft => {
-      draft!.key = params.key || draft?.key || this.getNewKey()
-      draft!.label = params.label || draft?.label || "Untitled node"
-      draft!.data = params.data || draft?.data || {}
-      draft!.sources = params.sources || draft?.sources || []
-      draft!.targets = params.targets || draft?.targets || []
-      draft!.data = params.data || draft?.data || {}
-    })
+  updateSchema(params: Partial<NodeSchema<T>>): NodeSchemaBuilder<T> {
+    let draft = this.schema
 
-    return this
+    return new NodeSchemaBuilderImpl({
+      key: params.key || draft?.key || this.getNewKey(),
+      label: params.label || draft?.label || "Untitled node",
+      data: (params.data as any) || draft?.data || {},
+      sources: params.sources || draft?.sources || [],
+      targets: params.targets || draft?.targets || [],
+      ioType: params.ioType || draft?.ioType || ("any" as any)
+    })
   }
 
-  data(data: Record<string, IoAttribute>) {
+  ioType(type: T): NodeSchemaBuilder<T> {
+    return this.updateSchema({
+      ioType: type
+    })
+  }
+
+  data(data: Record<string, T>) {
     return this.updateSchema({
       data
     })
   }
 
-  addSourceSocket(socket: NodeSocketSchema): NodeSchemaBuilder {
+  addSourceSocket(socket: NodeSocketSchema): NodeSchemaBuilder<T> {
     return this.updateSchema({
       sources: collect<NodeSocketSchema>([...this.schema.sources])
         .push(socket)
@@ -73,7 +80,7 @@ export class NodeSchemaBuilderImpl implements NodeSchemaBuilder {
     })
   }
 
-  addTargetSocket(socket: NodeSocketSchema): NodeSchemaBuilder {
+  addTargetSocket(socket: NodeSocketSchema): NodeSchemaBuilder<T> {
     return this.updateSchema({
       targets: collect<NodeSocketSchema>([...this.schema.targets])
         .push(socket)
@@ -81,7 +88,7 @@ export class NodeSchemaBuilderImpl implements NodeSchemaBuilder {
     })
   }
 
-  build(): NodeSchema<IoAttribute> {
+  build(): NodeSchema<T> {
     const result = JSON.parse(JSON.stringify(this.schema))
     this.schema = this.getBaseSchema({})
     return {
@@ -89,19 +96,19 @@ export class NodeSchemaBuilderImpl implements NodeSchemaBuilder {
     }
   }
 
-  key(key: string): NodeSchemaBuilder {
+  key(key: string): NodeSchemaBuilder<T> {
     return this.updateSchema({
       key
     })
   }
 
-  label(label: string): NodeSchemaBuilder {
+  label(label: string): NodeSchemaBuilder<T> {
     return this.updateSchema({
       label
     })
   }
 
-  removeSourceSocket(key: string): NodeSchemaBuilder {
+  removeSourceSocket(key: string): NodeSchemaBuilder<T> {
     return this.updateSchema({
       sources: collect<NodeSocketSchema>([...this.schema.sources])
         .whereNotIn("key", [key])
@@ -109,7 +116,7 @@ export class NodeSchemaBuilderImpl implements NodeSchemaBuilder {
     })
   }
 
-  removeTargetSocket(key: string): NodeSchemaBuilder {
+  removeTargetSocket(key: string): NodeSchemaBuilder<T> {
     return this.updateSchema({
       targets: collect<NodeSocketSchema>([...this.schema.targets])
         .whereNotIn("key", [key])
@@ -118,6 +125,8 @@ export class NodeSchemaBuilderImpl implements NodeSchemaBuilder {
   }
 }
 
-export function nodeBuilder() {
-  return new NodeSchemaBuilderImpl()
+export function nodeBuilder<T = IoAttribute>(
+  params: Partial<NodeSchema<T>> = {}
+) {
+  return new NodeSchemaBuilderImpl<T>(params)
 }

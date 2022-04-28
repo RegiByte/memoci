@@ -1,5 +1,5 @@
 import { Tab } from "@headlessui/react"
-import React, { Suspense, useCallback } from "react"
+import React, { Suspense, useCallback, useEffect, useMemo } from "react"
 import { Icons } from "ui"
 import { createTabStore } from "../../../store/creators/tabs"
 import { RuntimeSchema } from "../../../types/RuntimeSchema"
@@ -16,13 +16,20 @@ import {
   SampleSelectorParams
 } from "../../wrappers/SampleSelector"
 import { getPrimitivesDocs, schemas } from "../../../samples/schemas/primitives"
-import { ellipsis } from "../../../utils/string"
+import { $string, ellipsis } from "../../../utils/string"
 import {
   numberBundleman,
   stringBundleman
 } from "../../../samples/schemas/nodesBundles"
 import { schemaBuilder } from "../../../builders/Schema"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import {
+  useAppStorage,
+  useStorageDirFiles,
+  useStorageResource
+} from "../../wrappers/AppStorage/hooks"
+import { kebabCase } from "memo-utils"
+import dayjs from "dayjs"
 
 const useSchemaEditorTabStore = createTabStore(["visual", "json"])
 
@@ -65,11 +72,20 @@ interface SchemaStore {
     newSchema: string | undefined,
     ev: monaco.editor.IModelContentChangedEvent
   ): void
+
+  resetSchemaToDefault(): void
 }
 
 const useSchemaStore = create<SchemaStore>((set, get) => ({
   schema: defaultJsonSchema as any,
   schemaJson: defaultJsonCode,
+
+  resetSchemaToDefault() {
+    set({
+      schema: defaultJsonSchema,
+      schemaJson: defaultJsonCode
+    })
+  },
 
   setSchema(newSchema: Partial<RuntimeSchema> | Mutate<RuntimeSchema, []>) {
     set(current => {
@@ -107,11 +123,17 @@ export interface SchemaEditorForm {
   schema: RuntimeSchema
 }
 
-interface SchemaEditorProps extends SampleSelectorParams {}
+interface SchemaEditorProps extends SampleSelectorParams {
+  schema?: Partial<RuntimeSchema>
+  path?: string
+}
 
 function SchemaEditor(props: SchemaEditorProps) {
   const tabStore = useSchemaEditorTabStore()
-  const { schema, setSchema, onEditorChange } = useSchemaStore()
+  const { schema, setSchema, onEditorChange, resetSchemaToDefault } =
+    useSchemaStore()
+  const dirFiles = useStorageDirFiles("schemas")
+  const { putResource } = useAppStorage()
 
   const form = useForm<SchemaEditorForm>({
     defaultValues: {
@@ -119,26 +141,79 @@ function SchemaEditor(props: SchemaEditorProps) {
     }
   })
 
-  const onSelectSample = useCallback((ev: any) => {
-    ev.preventDefault()
+  let location = useLocation()
 
-    props
-      .selectSample(
-        schemas.map(sampleSchema => ({
-          description: sampleSchema.description,
-          key: sampleSchema.key,
-          title: sampleSchema.title,
-          content: JSON.stringify(sampleSchema, null, 2)
-        }))
-      )
-      .then(result => {
-        if (result) {
-          let schemaContent = JSON.parse(result.content)
-          setSchema(schemaContent)
-          form.setValue(`schema`, schemaContent)
-        }
-      })
-  }, [])
+  React.useEffect(() => {
+    if (location.pathname === "/schemas/create") {
+      resetSchemaToDefault()
+    }
+  }, [location])
+
+  const { schema: fileSchema, path: filePath } = props
+
+  useEffect(() => {
+    if (fileSchema && filePath) {
+      setSchema(fileSchema)
+    }
+  }, [fileSchema, filePath])
+
+  const onSelectSample = useCallback(
+    (ev: any) => {
+      ev.preventDefault()
+
+      props
+        .selectSample(
+          schemas.map(sampleSchema => ({
+            description: sampleSchema.description,
+            key: sampleSchema.key,
+            title: sampleSchema.title,
+            content: JSON.stringify(sampleSchema, null, 2)
+          }))
+        )
+        .then(result => {
+          if (result) {
+            let schemaContent = JSON.parse(result.content)
+            let updatedSchema = {
+              ...schemaContent,
+              key: schema.key,
+              title: schema.title,
+              description: schema.description
+            }
+            setSchema(updatedSchema)
+            form.setValue(`schema`, updatedSchema)
+          }
+        })
+    },
+    [schema]
+  )
+
+  const onSave = useCallback(() => {
+    if (!schema.title || schema.title.toLowerCase() === "untitled schema") {
+      alert("Missing schema title!")
+      return
+    }
+
+    let newFilePath = `${dayjs().format("DD-MM-YYYY")}--${
+      $string(schema.title).slugify().s
+    }.json`
+
+    let resolvedFilePath = filePath ? filePath + ".json" : undefined
+
+    putResource
+      .schemas(resolvedFilePath ?? newFilePath, JSON.stringify(schema, null, 2))
+      .then(result => console.log({ result }))
+  }, [dirFiles, schema, filePath])
+
+  useEffect(() => {
+    form.setValue("schema", schema)
+    form.setValue("schema.key", kebabCase(schema.title)!)
+  }, [schema])
+
+  const title = form.watch("schema.title")
+
+  useEffect(() => {
+    form.setValue("schema.key", kebabCase(title)!)
+  }, [title])
 
   const navigate = useNavigate()
 
@@ -150,9 +225,9 @@ function SchemaEditor(props: SchemaEditorProps) {
           onChange={tabStore.setSelectedIndex}
         >
           <Tab.List className="mx-40 mt-10 flex items-center gap-4">
-            <EditorAction onClick={() => navigate('/')}>
+            <EditorAction onClick={() => navigate("/")}>
               <span>Go Back</span>
-              <Icons.ArrowBack className="text-sky-400"/>
+              <Icons.ArrowBack className="text-sky-400" />
             </EditorAction>
             <EditorTab>
               Visual <Icons.Forms className="text-sky-400" />
@@ -165,7 +240,7 @@ function SchemaEditor(props: SchemaEditorProps) {
             <EditorAction>
               {ellipsis(schema.title, 20) || "Untitled Schema"}
             </EditorAction>
-            <EditorAction onClick={onSelectSample}>
+            <EditorAction onClick={onSave}>
               Save <Icons.DeviceFloppy className="text-blue-400" />
             </EditorAction>
           </Tab.List>
@@ -204,7 +279,7 @@ function LoadingComponent() {
   )
 }
 
-export default SampleSelector({
+let SchemaEditorWithSampleSector = SampleSelector({
   defaultOpen: false,
   renderDocs: (schema: SampleSelectorItem) => {
     const primitivesDocs = getPrimitivesDocs()
@@ -224,3 +299,28 @@ export default SampleSelector({
     </Suspense>
   )
 })
+
+export default SchemaEditorWithSampleSector
+
+function SchemaEditorWithParams({ component: Component, ...props }: any) {
+  const { path } = useParams()
+  const file = useStorageResource("schemas", `${path!}.json`)
+
+  const schema = useMemo(() => {
+    if (!file || file === "") return {}
+
+    try {
+      return JSON.parse(file)
+    } catch (e) {
+      return {}
+    }
+  }, [file])
+
+  return <Component path={path} schema={schema} {...props} />
+}
+
+export const SchemaFileEditor = (Component => {
+  return (props: any) => (
+    <SchemaEditorWithParams {...props} component={Component} />
+  )
+})(SchemaEditorWithSampleSector) as React.FC<any>

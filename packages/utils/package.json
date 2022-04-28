@@ -5,7 +5,7 @@
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "tsc --watch",
+    "dev": "swc src -d dist -w --copy-files",
     "editor": "pnpm run dev"
   },
   "devDependencies": {
@@ -15,5 +15,11 @@
     "config": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^4.5.3"
+  },
+  "dependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.171",
+    "@swc/helpers": "^0.3.8",
+    "@swc/jest": "^0.2.20"
   }
 }

@@ -52,7 +52,7 @@ export class SchemaBuilderImpl implements SchemaBuilder {
       description: params.description || "",
       ioAttributes: params.ioAttributes || [],
       nodes: params.nodes || [],
-      edges: params.edges || []
+      edges: params.edges || [],
     }
   }
 
