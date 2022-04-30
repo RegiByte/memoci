@@ -11,6 +11,7 @@ import { useFlowGraph } from "../../graphs/hooks/useFlowGraph"
 import { IoAttribute, RuntimeSchema } from "../../../types/RuntimeSchema"
 import { FlowGraphContext } from "../../graphs/flowGraphContext"
 import { createBundleman } from "../../../samples/schemas/bundleman"
+import { createGraphBundleMan } from "../../../samples/schemas/graphBundleman"
 
 interface GraphFormProps<T = IoAttribute> {
   runtimeSchema: RuntimeSchema<T>
@@ -27,7 +28,8 @@ export function GraphForm<T = IoAttribute>(props: GraphFormProps<T>) {
         value={{
           schema: props.schema,
           runtimeSchema: props.runtimeSchema,
-          bundleMan: createBundleman<T>(props.runtimeSchema)
+          bundleMan: createBundleman<T>(props.runtimeSchema),
+          graphBundleMan: createGraphBundleMan<T>(props.schema)
         }}
       >
         <Flow {...flow} />
@@ -43,27 +45,34 @@ const useGraphCreateStore = createGraphStore(
     .description("Basic graph for testing purposes")
     .docs(`# Hey nice docs 👍`)
     .addNodes([
-      numberBundleman.graphNode
-        .number!.key("number1")
+      stringBundleman.graphNode
+        .string!.key("string1")
         .position({
-          x: 250,
-          y: 200
+          x: 100,
+          y: 30
         })
         .build(),
       stringBundleman.graphNode
-        .string!.key("string1")
+        .string!.key("string2")
         .position({
           x: 100,
           y: 200
         })
         .build(),
       stringBundleman.graphNode
-        .string!.key("string2")
+        .join_string!.key("join_string1")
         .position({
-          x: 400,
-          y: 200
+          x: 320,
+          y: 125
         })
-        .build()
+        .build(),
+      stringBundleman.graphNode
+        .reverse_string!.key("reverse_string1")
+        .position({
+          x: 550,
+          y: 150
+        })
+        .build(),
     ])
     .build()
 )

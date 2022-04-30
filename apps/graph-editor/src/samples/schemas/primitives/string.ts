@@ -2,7 +2,8 @@ import { nodeBuilder as nobu } from "../../../builders/Schema/nodes"
 
 const nobuString = nobu().ioType("string")
 
-export const stringNode = nobuString
+export const stringNode = nobu()
+  .ioType("string")
   .key("string")
   .label("String")
   .data({

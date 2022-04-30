@@ -10,9 +10,9 @@ import {
 } from "../../builders/Schema/graphNode"
 import { collect } from "collect.js"
 
-type BundleManSchemaNode = Record<string, NodeSchema<IoAttribute> | null>
-type BundleManSchemaEdge = Record<string, NodeSchema<IoAttribute> | null>
-type BundleManGraphNode = Record<string, GraphNodeBuilder | null>
+export type BundleManSchemaNode = Record<string, NodeSchema<IoAttribute> | null>
+export type BundleManSchemaEdge = Record<string, NodeSchema<IoAttribute> | null>
+export type BundleManGraphNode = Record<string, GraphNodeBuilder | null>
 
 export type BundleMan = {
   node: BundleManSchemaNode
@@ -113,3 +113,4 @@ export function createBundleman<T = IoAttribute>(
     }
   ) as BundleMan
 }
+
