@@ -16,3 +16,5 @@ declare module '*.md' {
   // Modify below per your usage
   export { attributes, toc, html, ReactComponent, VueComponent, VueComponentWith };
 }
+
+declare module 'react-syntax-highlighter';

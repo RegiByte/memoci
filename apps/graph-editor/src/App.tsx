@@ -6,7 +6,7 @@ import { GraphCreateForm } from "./components/pages/graphEditor"
 
 function App() {
   return (
-    <div className="m-0 min-h-screen w-screen snap-y overscroll-x-none bg-sky-400 p-0 pb-40">
+    <div className="m-0 min-h-screen max-w-screen snap-y overflow-x-hidden overflow-y-auto bg-sky-400 p-0 pb-40">
       <EditorLayout>
         <Routes>
           <Route element={<Home />} path="/" />

@@ -15,7 +15,7 @@ import {
   SampleSelectorItem,
   SampleSelectorParams
 } from "../../wrappers/SampleSelector"
-import { getPrimitivesDocs, schemas } from "../../../samples/schemas/primitives"
+import { schemas } from "../../../samples/schemas/primitives"
 import { $string, ellipsis } from "../../../utils/string"
 import {
   numberBundleman,
@@ -30,6 +30,7 @@ import {
 } from "../../wrappers/AppStorage/hooks"
 import { kebabCase } from "memo-utils"
 import dayjs from "dayjs"
+import { getPrimitivesDocs } from "../../../samples/schemas/docs"
 
 const useSchemaEditorTabStore = createTabStore(["visual", "json"])
 
@@ -40,24 +41,15 @@ let EditorActionBase =
 const EditorTab = EditorActionBase.as(Tab)
 const EditorAction = EditorActionBase.button
 
-/*{
-  key: "untitled_schema",
-  title: "Untitled schema",
-  description: "Yay! 🎉 My first schema",
-  edges: [stringBundleman.edge.string, numberBundleman.edge.number],
-  nodes: [stringBundleman.node.string, numberBundleman.node.number],
-  ioAttributes: ["string", "number"]
-}*/
-
 const defaultJsonSchema = schemaBuilder()
   .key("untitled_schema")
   .title("Untitled schema")
   .description("Yay! 🎉 My first schema")
   .setIoAttributes(['string', 'number'])
-  .addNode(stringBundleman.node.string)
-  .addNode(numberBundleman.node.number)
-  .addEdge(stringBundleman.edge.string)
-  .addEdge(numberBundleman.edge.number)
+  .addNode(stringBundleman.node.string!)
+  .addNode(numberBundleman.node.number!)
+  .addEdge(stringBundleman.edge.string!)
+  .addEdge(numberBundleman.edge.number!)
   .build()
 
 const defaultJsonCode = JSON.stringify(defaultJsonSchema, null, 2)

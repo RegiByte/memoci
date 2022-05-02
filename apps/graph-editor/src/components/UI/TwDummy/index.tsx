@@ -16,10 +16,11 @@ type TailwindDummyElement<T extends TailwindDummyElementProps> = Record<
   > &
   CustomRenderElement
 
-interface TailwindDummyElementProps {
+type TailwindDummyElementProps = {
   children?: any
   className?: string
-}
+  style?: any
+} & Record<string, any>
 
 export function TwDummy<T extends TailwindDummyElementProps>(
   className: string

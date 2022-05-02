@@ -27,6 +27,10 @@ export type IoAttribute =
   | "image"
   | "array"
   | "json"
+  | "json_collection"
+  | "json_transform"
+  | "csv_collection"
+  | "csv_transform"
   | "boolean"
   | "any"
 

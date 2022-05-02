@@ -1,5 +1,6 @@
 const defaultTheme = require("tailwindcss/defaultTheme")
 const colors = require("tailwindcss/colors")
+const plugin = require("tailwindcss/plugin")
 
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
@@ -36,5 +37,27 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
+    plugin(function({addComponents, theme}) {
+      addComponents({
+        '.react-flow__edge-string .graphix-edge': {
+          stroke: theme('colors.blue.400')
+        },
+        '.react-flow__edge-number .graphix-edge': {
+          stroke: theme('colors.lime.400')
+        },
+        '.react-flow__edge-boolean .graphix-edge': {
+          stroke: theme('colors.red.400')
+        },
+        '.react-flow__edge-json .graphix-edge': {
+          stroke: theme('colors.amber.400')
+        },
+        '.react-flow__edge-array .graphix-edge': {
+          stroke: theme('colors.indigo.400')
+        },
+        '.react-flow__edge-image .graphix-edge': {
+          stroke: theme('colors.purple.400')
+        },
+      })
+    })
   ]
 }

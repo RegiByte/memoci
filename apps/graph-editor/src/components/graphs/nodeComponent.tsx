@@ -1,5 +1,5 @@
 import React from "react"
-import { NodeProps } from "react-flow-renderer"
+import { Handle, NodeProps, Position } from "react-flow-renderer"
 import { TwDummy } from "../UI/TwDummy"
 import { useFlowGraphContext } from "./flowGraphContext"
 import {
@@ -9,16 +9,18 @@ import {
 import { GraphNode } from "../../types/GraphSchema"
 
 const NodeWrapper = TwDummy(`bg-white flex  cursor-pointer
-   flex-col rounded-xl border-2 border-amber-500 transition-all hover:scale-105 min-w-[150px]`).div
+   flex-col rounded-xl border-2 min-w-[150px]`).div
 
-const NodeHeader = TwDummy(`flex items-center justify-center border-b-2 
-  border-sky-400 px-2 py-2`).div
+const NodeHeader = TwDummy(
+  `flex items-center justify-center border-b-2 px-2 py-2`
+).div
 
-const NodeSocketsWrapper = TwDummy(`flex-col`).div
+const NodeSocketsWrapper = TwDummy(`flex flex-col`).div
 
-interface NodeSocketProps extends NodeSocketSchema {
+interface NodeSocketProps {
   direction: NodeSocketDirection
   node: GraphNode
+  socket: NodeSocketSchema
 }
 
 const SocketRow = TwDummy(
@@ -28,52 +30,80 @@ const SocketRow = TwDummy(
 const SocketBubbleContainer = TwDummy("px-2").div
 const SocketBubble = TwDummy("h-[25px] w-[25px] inline-block rounded-full").span
 
-function NodeSocket(props: NodeSocketProps) {
+function NodeSocket({ direction, socket, node }: NodeSocketProps) {
   let socketBubble = (
-    <SocketBubbleContainer>
-      <SocketBubble className="bg-sky-400" />
+    <SocketBubbleContainer className={`relative`}>
+      <Handle
+        className={`p-2`}
+        id={socket.key}
+        position={direction === "source" ? Position.Right : Position.Left}
+        type={direction}
+        style={{
+          backgroundColor: `var(--io-${socket.type}-color)`
+        }}
+        onConnect={params => {
+          console.log(params)
+        }}
+      />
     </SocketBubbleContainer>
   )
-  let content = <span>{props.label}</span>
+  let content = <span>{socket.label}</span>
   return (
-    <SocketRow className={props.direction === 'source' ? 'justify-end' : 'justify-start'}>
-      {props.direction === "target" && socketBubble}
+    <SocketRow
+      className={direction === "source" ? "justify-end" : "justify-start"}
+    >
+      {direction === "target" && socketBubble}
       {content}
-      {props.direction === "source" && socketBubble}
+      {direction === "source" && socketBubble}
     </SocketRow>
   )
+}
+
+function getIoColorVariable(type: string) {
+  return `var(--io-${type}-color)`
 }
 
 function NodeComponent(props: NodeProps) {
   const flowGraph = useFlowGraphContext()
   const node = flowGraph.graphBundleMan.node?.[props.id]
+  const nodeSchema = flowGraph.bundleMan.node?.[props.type]
 
-  if (!node) return <></>
+  if (!node || !nodeSchema) return <></>
 
   return (
-    <NodeWrapper>
-      <NodeHeader>{node.label}</NodeHeader>
+    <NodeWrapper
+      style={{
+        borderColor: getIoColorVariable(nodeSchema.ioType)
+      }}
+    >
+      <NodeHeader
+        style={{
+          borderColor: getIoColorVariable(nodeSchema.ioType)
+        }}
+      >
+        {node.label}
+      </NodeHeader>
       <NodeSocketsWrapper>
-        <div className="flex flex-col">
+        <NodeSocketsWrapper>
           {node.sources.map(source => (
             <NodeSocket
-              {...source}
               direction="source"
               key={source.key}
               node={node}
+              socket={source}
             />
           ))}
-        </div>
-        <div className="flex flex-col">
+        </NodeSocketsWrapper>
+        <NodeSocketsWrapper>
           {node.targets.map(target => (
             <NodeSocket
-              {...target}
               direction="target"
               key={target.key}
               node={node}
+              socket={target}
             />
           ))}
-        </div>
+        </NodeSocketsWrapper>
       </NodeSocketsWrapper>
     </NodeWrapper>
   )

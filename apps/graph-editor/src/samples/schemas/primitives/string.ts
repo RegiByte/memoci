@@ -304,6 +304,25 @@ export const stringNormalizeNode = nobuString
   })
   .build()
 
+export const stringToBooleanNode = nobu()
+  .ioType("string")
+  .key("string_to_boolean")
+  .label("String to Boolean")
+  .data({
+    value: "string"
+  })
+  .addTargetSocket({
+    key: "value",
+    type: "string",
+    label: "Value"
+  })
+  .addSourceSocket({
+    key: "output",
+    type: "boolean",
+    label: "Output"
+  })
+  .build()
+
 export const stringStartsWithNode = nobuString
   .key("string_starts_with")
   .label("String Starts With")
@@ -439,5 +458,119 @@ export const stringRawNode = nobuString
     key: "output",
     label: "Output",
     type: "string"
+  })
+  .build()
+
+export const removeSpacesNode = nobu()
+  .ioType("string")
+  .key("remove_spaces")
+  .label("Remove Spaces")
+  .data({
+    string: "string"
+  })
+  .addTargetSocket({
+    key: "string",
+    type: "string",
+    label: "String"
+  })
+  .addSourceSocket({
+    key: "output",
+    type: "string",
+    label: "Output"
+  })
+  .build()
+
+export const removePunctuationNode = nobu()
+  .ioType("string")
+  .key("remove_punctuation")
+  .label("Remove Punctuation")
+  .data({
+    string: "string"
+  })
+  .addTargetSocket({
+    key: "string",
+    type: "string",
+    label: "String"
+  })
+  .addSourceSocket({
+    key: "output",
+    type: "string",
+    label: "Output"
+  })
+  .build()
+
+export const removeConsonantsNode = nobu()
+  .ioType("string")
+  .key("remove_consonants")
+  .label("Remove Consonants")
+  .data({
+    string: "string"
+  })
+  .addTargetSocket({
+    key: "string",
+    type: "string",
+    label: "String"
+  })
+  .addSourceSocket({
+    key: "output",
+    type: "string",
+    label: "Output"
+  })
+  .build()
+
+export const removeVowelsNode = nobu()
+  .ioType("string")
+  .key("remove_vowels")
+  .label("Remove Vowels")
+  .data({
+    string: "string"
+  })
+  .addTargetSocket({
+    key: "string",
+    type: "string",
+    label: "String"
+  })
+  .addSourceSocket({
+    key: "output",
+    type: "string",
+    label: "Output"
+  })
+  .build()
+
+export const stringTripleNode = nobu()
+  .ioType("string")
+  .key("string_triple")
+  .label("String Triple")
+  .data({
+    string: "string"
+  })
+  .addTargetSocket({
+    key: "string",
+    type: "string",
+    label: "String"
+  })
+  .addSourceSocket({
+    key: "output",
+    type: "string",
+    label: "Output"
+  })
+  .build()
+
+export const stringDoubleNode = nobu()
+  .ioType("string")
+  .key("string_triple")
+  .label("String Triple")
+  .data({
+    string: "string"
+  })
+  .addTargetSocket({
+    key: "string",
+    type: "string",
+    label: "String"
+  })
+  .addSourceSocket({
+    key: "output",
+    type: "string",
+    label: "Output"
   })
   .build()

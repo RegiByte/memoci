@@ -6,7 +6,7 @@ type PathFinderCallback = (nodeKey: string, node?: GraphNode) => Promise<void>
 export async function PathFinder<T>(
   nodeKey: string,
   graph: GraphSchema<T>,
-  callback: Function
+  callback: PathFinderCallback
 ) {
   const visited: Record<string, boolean> = {}
   let queue: string[] = []
@@ -21,6 +21,10 @@ export async function PathFinder<T>(
     return queue.includes(item)
   }
 
+  function enqueueNext(...items: string[]) {
+    items.forEach(item => queue.unshift(item))
+  }
+
   function enqueue(item: string) {
     queue = regenerateQueue(item)
   }
@@ -29,7 +33,7 @@ export async function PathFinder<T>(
 
   while (queue.length) {
     const node = queue.shift() as string
-    const currentNode = collect(graph.nodes).keyBy("key").get(node)
+    const currentNode = collect(graph.nodes).keyBy("key").get(node) as GraphNode
 
     let allNeighbors = collect(graph.edges)
       .filter(edge => [edge.source, edge.target].includes(node))
@@ -46,11 +50,12 @@ export async function PathFinder<T>(
       .filter(neighbor => !visited[neighbor])
       .all()
 
-    for (const neighbor of sortedNeighbors) {
-      if (!visited[neighbor] && !isOnQueue(neighbor)) {
-        queue.unshift(neighbor)
-      }
-    }
+    /** Enqueue neighbors */
+    collect(sortedNeighbors)
+      .filter(neighbor => !visited[neighbor] && !isOnQueue(neighbor))
+      .tap(neighbors => {
+        enqueueNext(...neighbors.all())
+      })
 
     let unvisitedSources = allNeighbors
       .where("target", node)
@@ -58,6 +63,8 @@ export async function PathFinder<T>(
       .filter(neighbor => !visited[neighbor])
       .count()
 
+    /** If we have unvisited neighbors on target sockets (inputs) we should delay the execution of the current node
+     * */
     if (unvisitedSources > 0) {
       enqueue(node)
     } else {

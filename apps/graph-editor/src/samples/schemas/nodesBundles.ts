@@ -25,6 +25,13 @@ import {
   numberNode,
   subtractNumberNode
 } from "./primitives/number"
+import {
+  andBooleanNode,
+  booleanNode,
+  notBooleanNode,
+  orBooleanNode
+} from "./primitives/boolean"
+import { parseJsonNode, pathJsonNode, stringifyJsonNode } from "./primitives/json"
 
 let nobu = nodeBuilder()
 
@@ -75,3 +82,37 @@ export const numberNodesBundle: Partial<RuntimeSchema> = {
 }
 
 export const numberBundleman = createBundleman(numberNodesBundle)
+
+export const booleanNodesBundle: Partial<RuntimeSchema> = {
+  edges: [
+    {
+      key: "boolean",
+      label: "Boolean Edge",
+      data: {
+        value: "boolean"
+      }
+    }
+  ],
+  nodes: [booleanNode, notBooleanNode, andBooleanNode, orBooleanNode]
+}
+
+export const booleanBundleman = createBundleman(booleanNodesBundle)
+
+export const jsonNodesBundle: Partial<RuntimeSchema> = {
+  edges: [
+    {
+      key: "json",
+      label: "Json Edge",
+      data: {
+        value: "json"
+      }
+    }
+  ],
+  nodes: [
+    parseJsonNode,
+    stringifyJsonNode,
+    pathJsonNode,
+  ]
+}
+
+export const jsonBundleman = createBundleman(jsonNodesBundle)

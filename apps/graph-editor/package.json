@@ -9,7 +9,7 @@
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "editor": "pnpm run tauri:dev",
-    "test": "jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "schema:generate": "node -r @swc-node/register scripts/generateSchema.ts",
     "docs": "pnpm run schema:generate"
   },

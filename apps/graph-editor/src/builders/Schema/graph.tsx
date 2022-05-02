@@ -10,6 +10,11 @@ import { IoAttribute } from "../../types/RuntimeSchema"
 import produce from "immer"
 import { collect } from "collect.js"
 
+export interface GraphNodePositionChange {
+  key: string
+  position: GraphNodePosition
+}
+
 export interface GraphBuilder<T = IoAttribute> {
   build(): GraphSchema
 
@@ -36,6 +41,8 @@ export interface GraphBuilder<T = IoAttribute> {
   inputs(inputs: GraphIoMap<T>): GraphBuilder<T>
 
   outputs(outputs: GraphIoMap<T>): GraphBuilder<T>
+
+  updateNodesPositions(changes: GraphNodePositionChange[]): GraphBuilder<T>
 }
 
 export class GraphBuilderImpl<T = IoAttribute, D = GraphNodeData<T>>
@@ -56,7 +63,7 @@ export class GraphBuilderImpl<T = IoAttribute, D = GraphNodeData<T>>
       edges: params.edges || [],
       nodes: params.nodes || [],
       docs: params.docs || "",
-      title: params.docs || `Graph ${graphCreationTime}`,
+      title: params.docs || `Graph ${graphCreationTime}`
     }
   }
 
@@ -76,6 +83,31 @@ export class GraphBuilderImpl<T = IoAttribute, D = GraphNodeData<T>>
       draft.nodes = (params.nodes || draft.nodes || []) as any
       draft.inputs = (params.inputs || draft.inputs || {}) as any
       draft.outputs = (params.outputs || draft.outputs || {}) as any
+    })
+
+    return this
+  }
+
+  updateNodesPositions(changes: GraphNodePositionChange[]): GraphBuilder<T> {
+    const updatedNodes = produce(this.graph.nodes, draft => {
+      const nodesByKey = (collect(draft as GraphNode[]).keyBy("key").all() as unknown as Record<string, GraphNode>)
+
+      changes.forEach(change => {
+        const changeNode = nodesByKey[change.key]
+        if (!changeNode) return
+
+        nodesByKey[change.key].position = {
+          x: change.position.x || changeNode.position.x,
+          y: change.position.y || changeNode.position.y
+        }
+      })
+
+      draft = collect(nodesByKey).values().all() as any
+    })
+
+    console.log({
+      changes,
+      updatedNodes
     })
 
     return this
@@ -166,6 +198,8 @@ export class GraphBuilderImpl<T = IoAttribute, D = GraphNodeData<T>>
   }
 }
 
-export function graphBuilder(initialGraph: Partial<GraphSchema> = {}) {
-  return new GraphBuilderImpl(initialGraph)
+export function graphBuilder<T = IoAttribute, D = GraphNodeData<T>>(
+  initialGraph: Partial<GraphSchema<T>> = {}
+) {
+  return new GraphBuilderImpl<T>(initialGraph)
 }

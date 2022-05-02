@@ -1,0 +1,63 @@
+.graphix-edge {
+    stroke-width: 4;
+    stroke: #ffffff;
+    stroke-dasharray: 8;
+    animation: graphix-dash 30s linear infinite;
+}
+
+.graphix-connection-line--head {
+    z-index: 999;
+    animation: connectionHead 3s ease-out infinite;
+}
+
+@keyframes connectionHead {
+    0% {
+        stroke: var(--io-string-color);
+    }
+
+    25% {
+        stroke: var(--io-number-color);
+    }
+
+    50% {
+        stroke: var(--io-json-color);
+    }
+
+    75% {
+        stroke: var(--io-image-color);
+    }
+
+    100% {
+        stroke: var(--io-boolean-color);
+    }
+}
+
+@keyframes graphix-dash {
+    to {
+        stroke-dashoffset: -333;
+    }
+}
+
+.react-flow__edge-string .graphix-edge {
+    stroke: var(--io-string-color);
+}
+
+.react-flow__edge-number .graphix-edge {
+    stroke: var(--io-number-color);
+}
+
+.react-flow__edge-array .graphix-edge {
+    stroke: var(--io-array-color);
+}
+
+.react-flow__edge-json .graphix-edge {
+    stroke: var(--io-json-color);
+}
+
+.react-flow__edge-image .graphix-edge {
+    stroke: var(--io-image-color);
+}
+
+.react-flow__edge-boolean .graphix-edge {
+    stroke: var(--io-boolean-color);
+}

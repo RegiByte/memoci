@@ -1,5 +1,11 @@
 import { schemaBuilder } from "../../builders/Schema"
-import { numberNodesBundle, stringNodesBundle } from "./nodesBundles"
+import {
+  booleanNodesBundle,
+  jsonNodesBundle,
+  numberNodesBundle,
+  stringNodesBundle
+} from "./nodesBundles"
+import { createBundleman } from "./bundleman"
 
 export const primitivesSchema = schemaBuilder()
   .title("Primitives (String / Number)")
@@ -7,7 +13,10 @@ export const primitivesSchema = schemaBuilder()
   .description("Provides basic nodes for manipulating strings and numbers")
   .addSchemaBundle(stringNodesBundle)
   .addSchemaBundle(numberNodesBundle)
+  .addSchemaBundle(booleanNodesBundle)
+  .addSchemaBundle(jsonNodesBundle)
+
+export const primitivesBundleman = createBundleman(primitivesSchema.build())
 
 export const schemas = [primitivesSchema.build()]
 
-export { getPrimitivesDocs } from "./docs"
