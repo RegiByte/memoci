@@ -48,6 +48,7 @@ export function graphNodesToFlow(nodes: GraphNode[]): Node[] {
         id: node.key,
         type: node.type,
         data: {},
+        dragHandle: '.node__drag-handle',
         position: node.position,
         draggable: true
       } as Node)
@@ -237,8 +238,8 @@ export function useFlowGraph<T = IoAttribute>(
       nodeTypes,
       edgeTypes,
       defaultZoom: 1,
-      minZoom: 1,
-      maxZoom: 5,
+      // minZoom: 1,
+      // maxZoom: 5,
       panOnScroll: true,
       snapToGrid: true,
       snapGrid: [15, 15],

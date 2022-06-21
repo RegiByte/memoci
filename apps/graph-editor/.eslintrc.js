@@ -11,7 +11,8 @@ module.exports = {
   extends: ["airbnb-typescript", "react-app", "react-app/jest", "prettier"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: "./tsconfig.json"
+    project: "./tsconfig.json",
+    extraFileExtensions: [".svelte"]
   },
   settings: {
     "import/resolver": {

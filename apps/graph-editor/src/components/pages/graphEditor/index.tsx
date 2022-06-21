@@ -87,8 +87,6 @@ export function GraphForm<T = IoAttribute>(props: GraphFormProps<T>) {
             setSchema: props.setSchema
           }}
         >
-          <GraphToolbar />
-
           <GraphContextMenu
             closeMenu={closeContextMenu}
             menuX={menuX}

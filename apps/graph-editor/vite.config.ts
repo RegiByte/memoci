@@ -2,6 +2,7 @@ import { defineConfig } from "vite"
 import swc from "unplugin-swc"
 import wasm from "vite-plugin-wasm"
 import markdown, { Mode } from "vite-plugin-markdown"
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
@@ -14,6 +15,7 @@ export default defineConfig(async () => {
         }
       }),
       swc.vite(),
+      svelte(),
       wasm()
     ]
   }

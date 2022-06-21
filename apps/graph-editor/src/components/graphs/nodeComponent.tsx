@@ -8,7 +8,7 @@ import {
 } from "../../types/RuntimeSchema"
 import { GraphNode } from "../../types/GraphSchema"
 
-const NodeWrapper = TwDummy(`bg-white flex  cursor-pointer
+const NodeWrapper = TwDummy(`bg-white flex
    flex-col rounded-xl border-2 min-w-[150px]`).div
 
 const NodeHeader = TwDummy(
@@ -24,11 +24,23 @@ interface NodeSocketProps {
 }
 
 const SocketRow = TwDummy(
-  "flex w-full items-center py-2 px-2 pointer-events-none"
+  "flex w-full items-center py-2 px-2"
 ).div
 
 const SocketBubbleContainer = TwDummy("px-2").div
 const SocketBubble = TwDummy("h-[25px] w-[25px] inline-block rounded-full").span
+
+function StringSocketInput() {
+  return (
+    <div className="max-w-96p">
+      <input className="max-w-full h-6 placeholder:text-sm rounded-lg" placeholder="String value" type="text" />
+    </div>
+  )
+}
+
+const socketInputs: Record<string, any> = {
+  string: StringSocketInput
+}
 
 function NodeSocket({ direction, socket, node }: NodeSocketProps) {
   let socketBubble = (
@@ -47,13 +59,16 @@ function NodeSocket({ direction, socket, node }: NodeSocketProps) {
       />
     </SocketBubbleContainer>
   )
-  let content = <span>{socket.label}</span>
   return (
     <SocketRow
       className={direction === "source" ? "justify-end" : "justify-start"}
     >
       {direction === "target" && socketBubble}
-      {content}
+      {socketInputs[socket.type] ? (
+        socketInputs[socket.type]()
+      ) : (
+        <span>{socket.label}</span>
+      )}
       {direction === "source" && socketBubble}
     </SocketRow>
   )
@@ -77,13 +92,14 @@ function NodeComponent(props: NodeProps) {
       }}
     >
       <NodeHeader
+        className="node__drag-handle"
         style={{
           borderColor: getIoColorVariable(nodeSchema.ioType)
         }}
       >
         {node.label}
       </NodeHeader>
-      <NodeSocketsWrapper>
+      <NodeSocketsWrapper className="isolate z-50">
         <NodeSocketsWrapper>
           {node.sources.map(source => (
             <NodeSocket
